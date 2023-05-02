@@ -51,7 +51,7 @@
           headerToolbar: {
             left: 'prev,next',
             center: 'title',
-            right: 'timeGridDay, dayGridWeek, dayGridMonth'
+            right: 'timeGridDay, dayGridWeek, dayGridMonth, list'
           },
           selectable: true,
           editable: true,
@@ -101,7 +101,7 @@
             if (title) {
               this.opcoesCalendario.events.push({
                 title: title,
-                start: `2023-05-02T${start}:00`,
+                start:`2023-05-02T${start}:00`,
                 // end: arg.end,
                 allDay: false
               })
