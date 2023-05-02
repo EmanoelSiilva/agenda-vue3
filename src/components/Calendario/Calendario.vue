@@ -57,9 +57,10 @@
           editable: true,
           locale: brLocale,
           select: this.selecionaData,
-          eventClick: this.handleDateClick,
+          eventClick: this.delete,
           themeSystem: 'bootstrap5',
           height: 650,
+          dayMaxEvents: true,
           events: [
             // {
             //   title: 'Evento 1',
@@ -81,47 +82,61 @@
     },
     methods: {
       selecionaData(arg) {
-      Swal.fire({
-        html:
-            '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" />',
-        icon: "info",
-        showCancelButton: true,
-        buttonsStyling: true,
-        confirmButtonText: "Sim, criar!",
-        cancelButtonText: 'Não, não crie!'
-       }).then((result) => {
-        if (result.value) {
-          const title = document.querySelector(
-            'input[name="event_name"]'
-          ).value
-          if (title) {
-            this.opcoesCalendario.events.push({
-              title: title,
-              start: arg.start,
-              end: arg.end,
-              allDay: arg.allDay
+        Swal.fire({
+          html:
+              '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" /> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
+          icon: "info",
+          showCancelButton: true,
+          buttonsStyling: true,
+          confirmButtonText: "Sim, criar!",
+          cancelButtonText: 'Não, não crie!'
+        }).then((result) => {
+          if (result.value) {
+            const title = document.querySelector(
+              'input[name="event_name"]'
+            ).value
+            const start = document.querySelector(
+              'input[name="event_time"]'
+            ).value
+            if (title) {
+              this.opcoesCalendario.events.push({
+                title: title,
+                start: `2023-05-02T${start}:00`,
+                // end: arg.end,
+                allDay: false
+              })
+            }
+            this.opcoesCalendario.unselect()
+          } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+              text: "Evento não criado",
+              icon: "error",
+              buttonsStyling: true,
+              confirmButtonText: "Ok",
             })
           }
-        } else if (result.dismiss === 'cancel') {
-          Swal.fire({
-            text: "Evento não criado",
-            icon: "error",
-            buttonsStyling: true,
-            confirmButtonText: "Ok",
-          })
-        }
-       })
+        })
       },
 
-      eventClick(arg) {
-        alert(arg.event.title)
-      },
-
-      handleDateClick(info) {
-        this.modalVisivel = true
-        this.opcoesCalendario.events.push({
-          title: 'title',
-          start: info.date
+      delete(arg) {
+        Swal.fire({
+          text: "Você tem certeza que deseja deletar esse evento?",
+          icon: "warning",
+          showCancelButton: true,
+          buttonsStyling: true,
+          confirmButtonText: "Sim, delete!",
+          cancelButtonText: "Não, não delete!"
+        }).then((result) => {
+          if (result.value) {
+            arg.event.remove()
+          } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+              text: "Evento não deletado.",
+              icon: "error",
+              buttonsStyling: true,
+              confirmButtonText: "Ok"
+            })
+          }
         })
       },
 
