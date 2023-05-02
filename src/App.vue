@@ -1,5 +1,4 @@
 <template>
-  <p>oi</p>
   <Calendario/>
 </template>
 
