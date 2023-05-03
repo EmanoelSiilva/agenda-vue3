@@ -61,18 +61,6 @@
           themeSystem: 'bootstrap5',
           height: 650,
           dayMaxEvents: true,
-          events: [
-            // {
-            //   title: 'Evento 1',
-            //   start: '2023-04-28'
-            // },
-            // {
-            //   title: 'Evento 2',
-            //   start: '2023-04-30',
-            //   end: '2023-05-02'
-            // }
-          ],
-          // dateClick: this.handleDateClick
         },
         modalVisivel: false,
         evento: '',
@@ -98,15 +86,15 @@
             const start = document.querySelector(
               'input[name="event_time"]'
             ).value
+            const data = arg.startStr
             if (title) {
               this.opcoesCalendario.events.push({
                 title: title,
-                start:`2023-05-02T${start}:00`,
+                start:`${data}T${start}`,
                 // end: arg.end,
                 allDay: false
               })
             }
-            this.opcoesCalendario.unselect()
           } else if (result.dismiss === 'cancel') {
             Swal.fire({
               text: "Evento não criado",
@@ -116,6 +104,7 @@
             })
           }
         })
+        console.log(arg.start)
       },
 
       delete(arg) {
@@ -139,10 +128,6 @@
           }
         })
       },
-
-      click() {
-        console.log(this.evento)
-      }
     },
     mounted() {
       console.log(this.inicio)
