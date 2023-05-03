@@ -61,6 +61,7 @@
           themeSystem: 'bootstrap5',
           height: 650,
           dayMaxEvents: true,
+          events: [],
         },
         modalVisivel: false,
         evento: '',
