@@ -6,7 +6,6 @@
     <div class="calendario-container">
       <FullCalendar  
         :options="opcoesCalendario"
-        :event-color=this.eventColor
       />
       
     </div>
@@ -64,7 +63,7 @@
           editable: true,
           locale: brLocale,
           select: this.selecionaData,
-          eventClick: this.delete,
+          eventClick: this.editar,
           themeSystem: 'false',
           height: 650,
           dayMaxEvents: true,
@@ -81,12 +80,12 @@
       selecionaData(arg) {
         Swal.fire({
           html:
-              '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" /> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
+              '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Meu evento"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
           icon: "info",
           showCancelButton: true,
           buttonsStyling: true,
           confirmButtonText: "Sim, criar!",
-          cancelButtonText: 'Não, não crie!'
+          cancelButtonText: 'Não, não crie!',
         }).then((result) => {
           if (result.value) {
             const title = document.querySelector(
@@ -116,20 +115,29 @@
         console.log(arg.start)
       },
 
-      delete(arg) {
+      editar(arg) {
         Swal.fire({
-          text: "Você tem certeza que deseja deletar esse evento?",
-          icon: "warning",
+          // text: "Você tem certeza que deseja deletar esse evento?",
+          html: '<div class="mb-7">Edite seu evento</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Edite seu evento aqui"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" /> <span> person </span',
+          icon: "question",
           showCancelButton: true,
           buttonsStyling: true,
-          confirmButtonText: "Sim, delete!",
-          cancelButtonText: "Não, não delete!"
+          confirmButtonText: "Sim, edite!",
+          cancelButtonText: "Não, não edite!",
         }).then((result) => {
+          const title = document.querySelector(
+              'input[name="event_name"]'
+            ).value
+          const start = document.querySelector(
+            'input[name="event_time"]'
+          ).value
+          const data = arg.startStr
           if (result.value) {
-            arg.event.remove()
+            arg.event.setProp('title', title)
+            arg.event.setDates(`${data}T${start}:00`, '')
           } else if (result.dismiss === 'cancel') {
             Swal.fire({
-              text: "Evento não deletado.",
+              text: "Evento não alterado.",
               icon: "error",
               buttonsStyling: true,
               confirmButtonText: "Ok"
@@ -137,9 +145,13 @@
           }
         })
       },
+
+      delete() {
+        alert('Evento Deletado')
+      }
     },
     mounted() {
-      console.log(this.inicio)
+      console.log('Salve')
     }
   }
   </script>
