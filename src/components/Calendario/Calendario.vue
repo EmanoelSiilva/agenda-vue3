@@ -1,12 +1,16 @@
 <template>
-    <div>
+
+<header>og1 é muito legal</header>
+
+<div class="main-container">
+    <div class="calendario-container">
       <FullCalendar  
         :options="opcoesCalendario"
+        :event-color=this.eventColor
       />
-      <p>oi</p>
       
     </div>
-
+</div>
     <div v-if="modalVisivel">
       <div>
           <span>
@@ -39,9 +43,11 @@
   import bootstrap5Plugin from '@fullcalendar/bootstrap5';
   import Swal from 'sweetalert2'
 
+
+
   export default {
     components: {
-    FullCalendar,
+    FullCalendar
   },
     data() {
       return {
@@ -53,24 +59,25 @@
             center: 'title',
             right: 'timeGridDay, dayGridWeek, dayGridMonth'
           },
+          eventColor:'#FF7A00',
           selectable: true,
           editable: true,
           locale: brLocale,
           select: this.selecionaData,
           eventClick: this.delete,
-          themeSystem: 'bootstrap5',
+          themeSystem: 'false',
           height: 650,
           dayMaxEvents: true,
           events: [
-            // {
-            //   title: 'Evento 1',
-            //   start: '2023-04-28'
-            // },
-            // {
-            //   title: 'Evento 2',
-            //   start: '2023-04-30',
-            //   end: '2023-05-02'
-            // }
+            {
+              title: 'Evento 1',
+              start: '2023-04-28'
+            },
+            {
+              title: 'Evento 2',
+              start: '2023-04-30',
+              end: '2023-05-02'
+            }
           ],
           // dateClick: this.handleDateClick
         },

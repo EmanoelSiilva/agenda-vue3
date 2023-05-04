@@ -18,8 +18,9 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.5",
     "core-js": "^3.8.3",
+    "sass": "^1.62.1",
     "sweetalert2": "^11.7.3",
-    "vue": "^3.2.13",
+    "vue": "^3.2.47",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
