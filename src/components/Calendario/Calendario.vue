@@ -61,6 +61,7 @@
           themeSystem: 'bootstrap5',
           height: 650,
           dayMaxEvents: true,
+          // listDayFormat: 'dddd, MMMM D, YYYY',
           events: [],
         },
         modalVisivel: false,
@@ -91,7 +92,7 @@
             if (title) {
               this.opcoesCalendario.events.push({
                 title: title,
-                start:`${data}T${start}`,
+                start:`${data}T${start}:00`,
                 // end: arg.end,
                 allDay: false
               })
