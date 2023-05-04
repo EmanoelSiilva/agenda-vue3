@@ -1,12 +1,16 @@
 <template>
 
-<header>og1 é muito legal</header>
+<header><h1>OGENDAMENTO</h1></header>
 
 <div class="main-container">
     <div class="calendario-container">
       <FullCalendar  
         :options="opcoesCalendario"
-      />
+        :event-color=this.eventColor
+      >
+    
+    
+    </FullCalendar>
       
     </div>
 </div>
@@ -32,15 +36,20 @@
 </template>
   <script>
   import FullCalendar from '@fullcalendar/vue3'
+
   import dayGridPlugin from '@fullcalendar/daygrid'
-  import interactionPlugin from '@fullcalendar/interaction'
-  import listPlugin from '@fullcalendar/list'
   import timeGridPlugin from '@fullcalendar/timegrid'
+  import listPlugin from '@fullcalendar/list'
+
+  import interactionPlugin from '@fullcalendar/interaction'
   import brLocale from '@fullcalendar/core/locales/pt-br';
+  import Swal from 'sweetalert2'
+  
+
   import 'bootstrap/dist/css/bootstrap.css';
   import 'bootstrap-icons/font/bootstrap-icons.css';
   import bootstrap5Plugin from '@fullcalendar/bootstrap5';
-  import Swal from 'sweetalert2'
+ 
 
 
 
@@ -69,6 +78,7 @@
           dayMaxEvents: true,
           // listDayFormat: 'dddd, MMMM D, YYYY',
           events: [],
+
         },
         modalVisivel: false,
         evento: '',
@@ -146,9 +156,6 @@
         })
       },
 
-      delete() {
-        alert('Evento Deletado')
-      }
     },
     mounted() {
       console.log('Salve')
