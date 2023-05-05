@@ -1,9 +1,14 @@
-<template>
+<template id="my-template">
 
 <header><h1>OGENDAMENTO</h1></header>
 
 <div class="main-container">
+
+
+
     <div class="calendario-container">
+
+
       <FullCalendar  
         :options="opcoesCalendario"
         @eventClick="handleEventClickGetInfo()"
@@ -11,7 +16,6 @@
     
     
     </FullCalendar>
-      
     </div>
 </div>
     <div v-if="modalVisivel">
@@ -61,7 +65,7 @@
       return {
         opcoesCalendario: {
           plugins: [ dayGridPlugin, interactionPlugin, listPlugin, timeGridPlugin, bootstrap5Plugin ],
-          initialView: 'dayGridMonth',
+          initialView: '',
           headerToolbar: {
             left: 'prev,next',
             center: 'title',
@@ -72,13 +76,12 @@
           editable: true,
           locale: brLocale,
           select: this.selecionaData,
-          eventClick: this.delete,
+          eventClick: this.editar,
           selectLongPressDelay: this.selecionaData,
           themeSystem: 'false',
           height: 650,
           dayMaxEvents: true,
-
-
+          // listDayFormat: 'dddd, MMMM D, YYYY',
           events: [],
           // dateClick: this.handleEventClick(),
 
@@ -86,9 +89,26 @@
         modalVisivel: false,
         evento: '',
         inicio: null,
-        fim: null
+        fim: null,
       }
     },
+
+    computed: {
+
+      isMobile() {
+        return window.innerWidth <= 768 && window.innerHeight <= 1024;
+      },
+
+      display(){
+        if(this.isMobile === true){
+          return 'timeGridDay'
+        }
+      }
+
+
+    },
+
+
     methods: {
 
 
@@ -96,12 +116,12 @@
       selecionaData(arg) {
         Swal.fire({
           html:
-              '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" /> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
+              '<div class="mb-7">Criar um novo evento?</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Meu evento"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
           icon: "info",
           showCancelButton: true,
           buttonsStyling: true,
           confirmButtonText: "Sim, criar!",
-          cancelButtonText: 'Não, não crie!'
+          cancelButtonText: 'Não, não crie!',
         }).then((result) => {
           if (result.value) {
             const title = document.querySelector(
@@ -114,7 +134,7 @@
             if (title) {
               this.opcoesCalendario.events.push({
                 title: title,
-                start:`${data}T${start}`,
+                start:`${data}T${start}:00`,
                 // end: arg.end,
                 allDay: false
               })
@@ -131,20 +151,36 @@
         console.log(arg.start)
       },
 
-      delete(arg) {
+      editar(arg) {
         Swal.fire({
-          text: "Você tem certeza que deseja deletar esse evento?",
-          icon: "warning",
+          // text: "Você tem certeza que deseja deletar esse evento?",
+          html: '<div class="mb-7">Edite seu evento</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Edite seu evento aqui"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
+          icon: "question",
           showCancelButton: true,
           buttonsStyling: true,
-          confirmButtonText: "Sim, delete!",
-          cancelButtonText: "Não, não delete!"
+          confirmButtonText: "Sim, edite!",
+          cancelButtonText: "Não, não edite!",
+          showCloseButton: true,
+          footer: `<button id="botao-excluir">Excluir evento?</button>`,
+          preConfirm: () => {
+            window.teste = () => {alert('teste')}
+          }
         }).then((result) => {
+          const title = document.querySelector(
+              'input[name="event_name"]'
+            ).value
+          const start = document.querySelector(
+            'input[name="event_time"]'
+          ).value
+          const data = arg.startStr
+          const botao = document.getElementById('botao-excluir')
+          botao.addEventListener('click', () => {console.log('teste')})
           if (result.value) {
-            arg.event.remove()
+            arg.event.setProp('title', title)
+            arg.event.setDates(`${data}T${start}:00`, '')
           } else if (result.dismiss === 'cancel') {
             Swal.fire({
-              text: "Evento não deletado.",
+              text: "Evento não alterado.",
               icon: "error",
               buttonsStyling: true,
               confirmButtonText: "Ok"
@@ -159,9 +195,23 @@
 
 
 
+      teste() {
+        alert('HJ TEM?')
+      }
     },
-    mounted() {
-      console.log(this.inicio)
+
+    beforeMount() {
+    
+      if(this.isMobile === true){
+        this.opcoesCalendario.initialView = this.display
+      }
+
+      console.log(this.isMobile)
+      console.log(this.display)
+
+
+      
+
     }
   }
   </script>
