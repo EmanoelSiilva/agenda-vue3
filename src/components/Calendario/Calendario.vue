@@ -1,4 +1,4 @@
-<template>
+<template id="my-template">
 
 <header><h1>OGENDAMENTO</h1></header>
 
@@ -11,7 +11,6 @@
     
     
     </FullCalendar>
-      
     </div>
 </div>
     <div v-if="modalVisivel">
@@ -128,12 +127,17 @@
       editar(arg) {
         Swal.fire({
           // text: "Você tem certeza que deseja deletar esse evento?",
-          html: '<div class="mb-7">Edite seu evento</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Edite seu evento aqui"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" /> <span> person </span',
+          html: '<div class="mb-7">Edite seu evento</div><div class="fw-bold mb-5">Evento:</div><input type="text" class="form-control" name="event_name" placeholder="Edite seu evento aqui"/> <div class="fw-bold mb-5">Horário:</div><input type="time" class="form-control" name="event_time" />',
           icon: "question",
           showCancelButton: true,
           buttonsStyling: true,
           confirmButtonText: "Sim, edite!",
           cancelButtonText: "Não, não edite!",
+          showCloseButton: true,
+          footer: `<button id="botao-excluir">Excluir evento?</button>`,
+          preConfirm: () => {
+            window.teste = () => {alert('teste')}
+          }
         }).then((result) => {
           const title = document.querySelector(
               'input[name="event_name"]'
@@ -142,6 +146,8 @@
             'input[name="event_time"]'
           ).value
           const data = arg.startStr
+          const botao = document.getElementById('botao-excluir')
+          botao.addEventListener('click', () => {console.log('teste')})
           if (result.value) {
             arg.event.setProp('title', title)
             arg.event.setDates(`${data}T${start}:00`, '')
@@ -156,6 +162,9 @@
         })
       },
 
+      teste() {
+        alert('HJ TEM?')
+      }
     },
     mounted() {
       console.log('Salve')
