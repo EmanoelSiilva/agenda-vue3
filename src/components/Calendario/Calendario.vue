@@ -6,7 +6,7 @@
     <div class="calendario-container">
       <FullCalendar  
         :options="opcoesCalendario"
-        :event-color=this.eventColor
+        @eventClick="handleEventClickGetInfo()"
       >
     
     
@@ -73,10 +73,14 @@
           locale: brLocale,
           select: this.selecionaData,
           eventClick: this.delete,
+          selectLongPressDelay: this.selecionaData,
           themeSystem: 'false',
           height: 650,
           dayMaxEvents: true,
+
+
           events: [],
+          // dateClick: this.handleEventClick(),
 
         },
         modalVisivel: false,
@@ -86,6 +90,9 @@
       }
     },
     methods: {
+
+
+
       selecionaData(arg) {
         Swal.fire({
           html:
@@ -145,6 +152,12 @@
           }
         })
       },
+
+      handleEventClickGetInfo(info){
+        console.log(info, 'oi')
+      },
+
+
 
     },
     mounted() {
