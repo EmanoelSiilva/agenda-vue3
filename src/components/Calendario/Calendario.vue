@@ -131,13 +131,10 @@
           icon: "question",
           showCancelButton: true,
           buttonsStyling: true,
-          confirmButtonText: "Sim, edite!",
-          cancelButtonText: "Não, não edite!",
+          confirmButtonText: "Editar evento!",
+          cancelButtonText: "Excluir evento!",
           showCloseButton: true,
-          footer: `<button id="botao-excluir">Excluir evento?</button>`,
-          preConfirm: () => {
-            window.teste = () => {alert('teste')}
-          }
+          type: ''
         }).then((result) => {
           const title = document.querySelector(
               'input[name="event_name"]'
@@ -145,18 +142,32 @@
           const start = document.querySelector(
             'input[name="event_time"]'
           ).value
-          const data = arg.startStr
-          const botao = document.getElementById('botao-excluir')
-          botao.addEventListener('click', () => {console.log('teste')})
           if (result.value) {
-            arg.event.setProp('title', title)
-            arg.event.setDates(`${data}T${start}:00`, '')
-          } else if (result.dismiss === 'cancel') {
             Swal.fire({
-              text: "Evento não alterado.",
-              icon: "error",
+              text: "Evento editado com sucesso!",
+              icon: "success",
               buttonsStyling: true,
               confirmButtonText: "Ok"
+            })
+            arg.event.setProp('title', title)
+            arg.event.setDates(`${data}T${start}:00`)
+          } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+              text: "Você tem certeza que deseja excluir esse evento?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: "Sim",
+              cancelButtonText: "Não",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  text: "Evento excluido",
+                  icon: "error",
+                  buttonsStyling: true,
+                  confirmButtonText: "Ok"
+                })
+                arg.event.remove()
+              }
             })
           }
         })
