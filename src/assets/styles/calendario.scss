@@ -1,4 +1,7 @@
-
+template{
+    height: 100%;
+    margin: 0;
+}
 
 header{
 
@@ -14,18 +17,24 @@ header{
 
 .main-container{
     
-    width: 100vw;
-    height: 100%;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+
+    height: 90vh;
     background-color: #d9d9d9;
+    margin-top: 0px;
+
+    flex: 1;
 
 
 }
 
 
 .calendario-container{
+    
+    padding-top: 10%;
+    padding-left: 7%;
     width: 90%;
 }
 
@@ -96,10 +105,15 @@ header{
 
 }
 
-@media  screen and (max-height: 1080px) {
-
-    .main-container{
-        padding-top: 10%;
-    }
+@media screen and (max-height: 1080px) {
     
+    .calendario-container{
+    
+        padding-top: 5%;
+        padding-left: 0;
+        width: 90%;
+    }
+
+
+
 }

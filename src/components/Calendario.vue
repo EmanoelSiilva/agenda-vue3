@@ -1,41 +1,31 @@
 <template id="my-template">
 
-<header><h1>OGENDAMENTO</h1></header>
+<header>
+  <h1>OGENDAMENTO</h1>
+</header>
+
 
 <div class="main-container">
 
+  <aside class="sidebar-container">
+    <Sidebar/>
+  </aside>
 
-
-    <div class="calendario-container">
+     <div class="calendario-container">
 
 
       <FullCalendar  
         :options="opcoesCalendario"
         @eventClick="handleEventClickGetInfo()"
-      >
+      />
     
-    
-    </FullCalendar>
+
     </div>
+
+
+
 </div>
-    <div v-if="modalVisivel">
-      <div>
-          <span>
-              person
-          </span>
-          <input type="text" placeholder="Evento" v-model="evento">
-      </div>
-      <div>
-          <span>
-              schedule
-              <input type="time"  placeholder="Início" v-model="inicio"/>
-              <input type="time"  placeholder="Fim"  v-model="fim"/>
-          </span>
-      </div>
-      <div>
-          <button @click="click">aplicar</button>
-      </div>
-    </div>
+
     
 </template>
   <script>
@@ -54,12 +44,13 @@
   import 'bootstrap-icons/font/bootstrap-icons.css';
   import bootstrap5Plugin from '@fullcalendar/bootstrap5';
  
+  import Sidebar from './Sidebar.vue'
 
 
 
   export default {
     components: {
-    FullCalendar
+    FullCalendar, Sidebar
   },
     data() {
       return {
@@ -122,6 +113,7 @@
           buttonsStyling: true,
           confirmButtonText: "Sim, criar!",
           cancelButtonText: 'Não, não crie!',
+
         }).then((result) => {
           if (result.value) {
             const title = document.querySelector(
@@ -139,6 +131,9 @@
                 allDay: false
               })
             }
+
+            console.log(this.opcoesCalendario.events)
+
           } else if (result.dismiss === 'cancel') {
             Swal.fire({
               text: "Evento não criado",
@@ -149,6 +144,7 @@
           }
         })
         console.log(arg.start)
+        console.log(this.opcoesCalendario.events, arg.event)
       },
 
       editar(arg) {
@@ -194,6 +190,7 @@
                   confirmButtonText: "Ok"
                 })
                 arg.event.remove()
+                console.log(this.opcoesCalendario.events, arg.event)
               }
             })
           }
@@ -216,13 +213,12 @@
       if(this.isMobile === true){
         this.opcoesCalendario.initialView = this.display
       }
-
-      console.log(this.isMobile)
-      console.log(this.display)
-
-
       
 
+
+    },
+    mounted(){
+      console.log(this.opcoesCalendario.events)
     }
   }
   </script>

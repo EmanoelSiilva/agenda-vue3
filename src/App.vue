@@ -1,10 +1,9 @@
 <template>
-      <Calendario/>
-
+      <RouterView />
 </template>
 
 <script>
-import Calendario from './components/Calendario/Calendario.vue'
+import Calendario from './components/Calendario.vue'
 
 export default {
   name: 'App',
