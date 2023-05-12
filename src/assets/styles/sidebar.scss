@@ -1,10 +1,11 @@
 .sidebar{
     background-color: #fff;
     height: 100%;
-    width: 29.77px;
+    width: 89.77px;
     z-index: 3;
 
     transition: width 0.3s ease;
+
 }
 
 .sidebar.expanded {
@@ -12,6 +13,17 @@
     width: 250.77px;
     display: flex;
     flex-direction: column;
+}
+
+#sidebarNotExpanded{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 19px;
+}
+
+#optionsIcon{
+    transition: opacity 0.3s ease-out;
 }
 
 .sidebar-elements-container{

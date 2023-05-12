@@ -3,9 +3,21 @@
     :class="{ 'expanded': isExpanded }"
     @mouseenter="expandSidebar"
     @mouseleave="collapseSidebar"
-    @touchstart="expandSidebar"
-    @touchend="collapseSidebar"
+    @touchstart="expandSidebarOnTouch"
     >
+
+        <div class="sidebar-elements-container"
+        id="sidebarNotExpanded"
+        v-if="(isExpanded === false)">
+            <div class="icon-container">
+                <span class="material-symbols-outlined"
+                id="optionsIcon">
+                reorder
+                </span>
+            </div>
+        </div>
+
+
         <div 
         v-if="isExpanded" 
         class="sidebar-elements-container">
@@ -84,7 +96,14 @@ data() {
 methods: {
 
 expandSidebar(){
-    this.isExpanded = true},
+    this.isExpanded = true
+},
+
+expandSidebarOnTouch(){
+    setTimeout(this.expandSidebar, 300)
+    console.log('oi')
+
+},
 
 collapseSidebar(){
     this.isExpanded = false
