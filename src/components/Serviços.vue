@@ -1,6 +1,6 @@
 <template>
 
-    <Header></Header>
+    <HeaderAgendamento/>
 
     <div class="main-container">
 
@@ -16,12 +16,12 @@
 
 <script>
 import Sidebar from './Sidebar.vue';
-import Header from './Header.vue';
+import HeaderAgendamento from './HeaderAgendamento.vue';
 
 export default{
 
 components:{
-    Sidebar, Header
+    Sidebar, HeaderAgendamento
 }
 
 }
