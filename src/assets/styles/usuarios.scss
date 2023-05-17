@@ -79,6 +79,28 @@ body{
 
 }
 
+.no-user-card{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;  
+
+    width: 50vw;
+    height: 22vh;
+    
+    cursor: pointer;
+
+}
+
+#moodBad{
+    font-size: 52px;
+}
+
 .user-card:hover{
     background-color: #f9f9f9;
 }

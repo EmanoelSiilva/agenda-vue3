@@ -75,6 +75,23 @@
                 
                 
             </RouterLink>
+
+            <RouterLink to="/minhasLojas" class="sidebar-element"> 
+                
+                <div class="icon-container">
+                    <span class="material-symbols-outlined">
+                    storefront
+                    </span>
+                
+                </div>
+                
+
+                <div class="p-sidebar-container">
+                    <p>Lojas</p>
+                </div>
+                
+                
+            </RouterLink>
     </div>
 
     </div>

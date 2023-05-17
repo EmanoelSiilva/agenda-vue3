@@ -4,6 +4,7 @@ import Calendario from "../components/Calendario.vue"
 import Colaboradores from "../components/Colaboradores.vue"
 import Serviços from "../components/Serviços.vue"
 import Usuarios from "../components/Usuarios.vue"
+import Lojas from "../components/Lojas.vue"
 
 
 
@@ -31,6 +32,11 @@ const routes = [
         name: 'Serviços',
         component: Serviços,
         
+    },
+    {
+        path: '/minhasLojas',
+        name:  'loja',
+        component: Lojas
     },
 ]
 

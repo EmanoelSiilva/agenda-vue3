@@ -1,0 +1,42 @@
+.swal-popup{
+    width: 50px;
+    height: 50px;
+}
+
+.modal-container{
+    display: flex ;
+    flex-direction: column;
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 14px;
+}
+
+.fw-bold{
+    display: flex;
+    align-items: center;
+
+    padding: 15px;
+    height: 55px;
+
+    
+}
+
+
+.modal-cell{
+   display: flex;
+   flex-direction: column;
+
+   width: 30vw;
+}
+
+.modal-element{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
