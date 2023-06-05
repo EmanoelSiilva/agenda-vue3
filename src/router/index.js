@@ -4,6 +4,7 @@ import Calendario from "../components/Calendario.vue"
 import Colaboradores from "../components/Colaboradores.vue"
 import Serviços from "../components/Serviços.vue"
 import Usuarios from "../components/Usuarios.vue"
+import Userprofile from "../components/Userprofile.vue"
 import Lojas from "../components/Lojas.vue"
 
 
@@ -22,6 +23,11 @@ const routes = [
         
     },
     {
+        path: '/usuario',
+        name:'usuario',
+        component: Userprofile
+    },
+    {
         path: '/colaboradores',
         name: 'colaboradores',
         component: Colaboradores,
@@ -38,6 +44,7 @@ const routes = [
         name:  'loja',
         component: Lojas
     },
+
 ]
 
 const router = createRouter({

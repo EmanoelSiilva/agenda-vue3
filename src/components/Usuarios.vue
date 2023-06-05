@@ -32,7 +32,8 @@
                         mood_bad
                     </span>
 
-                    Ops! Parece que ainda não temos usuários.
+                    <div>Ops! Parece que ainda não temos usuários.</div>
+                    
 
                 </div>
             </div>
@@ -65,7 +66,7 @@
 
             <div class="button-menu-container">
                 
-                <div class="button-container">
+                <div class="button-container" @click="getInformaçõesDoUsuário(index)">
                     <span class="material-symbols-outlined">
                     edit
                     </span>  
@@ -90,6 +91,7 @@
     
     </div>
 
+
 </template>
 
 <script>
@@ -97,62 +99,49 @@ import Swal from 'sweetalert2'
 
 import Sidebar from './Sidebar.vue';
 import HeaderAgendamento from './HeaderAgendamento.vue';
+import Userprofile from './Userprofile.vue';
+
 
 export default{
 
 components:{
-    Sidebar, HeaderAgendamento
+    Sidebar, HeaderAgendamento, Userprofile
 },
 
 data(){
     return{
-        users: [
-            // {
-            //     nome: 'zé da manga',
-            //     contato: '(99) 99999-9999',
-            //     email: 'zedamanga@email.com',
-            //     endereço: {
-
-            //         numero: '69',
-            //         logadouro: 'rua da manga',
-            //         cep: '57073-470',
-
-            //     }
-            
-
-            // },
-            // {
-            //     nome: 'tonhão da capotaria',
-            //     contato: '(99) 99999-9999',
-            //     email: 'toninhocapotaria@email.com',
-            //     endereço: {
-
-            //     numero: '47',
-            //     logadouro: 'capotaria do tonhão',
-            //     cep: '88888-888',
-
-            //     }
-            // },
-            // {
-            //     nome: 'val do sítio',
-            //     contato: '(99) 99999-9999',
-            //     email: 'piapraimara@email.com',
-            //     endereço: {
-
-            //     numero: '258',
-            //     logadouro: 'sitio do val',
-            //     cep: '57073-470',
-
-            //     }
-            // },
-
-        ],
-
+        users: this.$store.state.clientes,
     }
 },
 
 methods:{
+    
+    
+    
+    verificarInformçãoDeEntrada(){
+
+        console.log(this.users)
+        const nomeExistente = this.users.some(user => user.nome === this.novoUsuario.nome);
+        const emailExistente = this.users.some(user => user.email === this.novoUsuario.email);
+
+
+        if (nomeExistente || emailExistente) {
+            Swal.fire({
+            title: 'Erro',
+            text: 'Nome ou email já existente',
+            icon: 'error',
+            });
+            return;
+        }
+
+
+    },
+
+    
+    
     AdicionarUsuario(){
+
+        // this.verificarInformçãoDeEntrada()
     
         const newUser = {
             nome: '',
@@ -174,13 +163,16 @@ methods:{
           `
           <div class="modal-container">
 
-          <div class="mb-7">
-                Adicionar Usuário
-                </div>
+
                 
                     <div class="modal-content">
-
-                        <div class="modal-cell">
+                        
+                        <div class="modal-header">
+                                Adicionar Usuário
+                        </div>
+                        
+                        
+                            <div class="modal-cell">
 
                             <div class="modal-element">
 
@@ -283,22 +275,53 @@ methods:{
           customClass: {
             
             popup: 'swal-popup',
+            confirmButton: 'custom-confirm-button',
             
         },
 
         }).then((result) => {
             if(result){
-                newUser.nome = document.querySelector('#nomeInput').value
-                newUser.email = document.querySelector('#emailInput').value
-                newUser.contato = document.querySelector('#telefoneInput').value
-                newUser.endereço.numero = document.querySelector('#numeroInput').value
-                newUser.endereço.logadouro = document.querySelector('#logadouroInput').value
-                newUser.endereço.cep = document.querySelector('#cepInput').value
 
-                this.users.push(newUser)
+
+                const nome = document.querySelector('#nomeInput').value;
+                const email = document.querySelector('#emailInput').value;
+                const contato = document.querySelector('#telefoneInput').value;
+                const numero = document.querySelector('#numeroInput').value;
+                const logadouro = document.querySelector('#logadouroInput').value;
+                const cep = document.querySelector('#cepInput').value;
+
+                if (!nome || !email || !contato || !numero || !logadouro || !cep) {
+               
+                Swal.fire({
+                text: 'Por favor, preencha todos os campos!',
+                icon: 'error',
+                });
+                return; 
+            }
+
+
+            const newUser = {
+                    nome,
+                    email,
+                    contato,
+                    endereço: {
+                    numero,
+                    logadouro,
+                    cep,
+                    },
+                };
+
+                // this.users.push(newUser)
+                this.$store.dispatch('adicionarCliente', newUser)
 
             }
         })
+    },
+
+    getInformaçõesDoUsuário(index){
+
+        this.selectedProfile = index
+        this.$router.push('usuario')
     },
 
     deletarUsuario(index){

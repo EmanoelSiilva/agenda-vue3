@@ -59,6 +59,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     background-color: #fff;
     height: 100%;
     padding: 19px;
@@ -100,6 +101,7 @@ body{
 #moodBad{
     font-size: 52px;
 }
+
 
 .user-card:hover{
     background-color: #f9f9f9;
@@ -182,7 +184,7 @@ body{
     }
     
     .userlist-container{
-        padding-right: 10% !important;
+
         padding-left: 10%;
         width: 100vw;
     }
@@ -203,7 +205,7 @@ body{
 @media screen and (max-width:700px) {
 
     .userlist-container{
-        padding-right: 10% !important;
+
         padding-left: 10%;
         width: 100%;
     }
